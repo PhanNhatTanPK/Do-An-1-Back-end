@@ -4,8 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Employeemanagement {
+public class InternshipManagement {
+
 	public static void main(String[] args) {
-		SpringApplication.run(Employeemanagement.class, args);  
+		// TODO Auto-generated method stub
+		SpringApplication.run(InternshipManagement.class, args);
 	}
+
 }
