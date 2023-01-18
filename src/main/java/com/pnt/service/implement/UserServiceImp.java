@@ -1,4 +1,4 @@
-package com.pnt.service.imp;
+package com.pnt.service.implement;
 
 import java.util.List;
 import java.util.Set;
@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pnt.exception.UserFoundException;
+import com.pnt.model.dto.UserDto;
 import com.pnt.model.user.User;
 import com.pnt.model.user.UserRole;
 import com.pnt.repository.RoleRepo;
+import com.pnt.repository.UserDtoRepo;
 import com.pnt.repository.UserRepo;
 import com.pnt.service.UserService;
 
@@ -22,7 +24,9 @@ public class UserServiceImp implements UserService {
 	private UserRepo userRepo;
 	@Autowired
 	private RoleRepo roleRepo;
-
+	@Autowired
+	private UserDtoRepo userDtoRepo;
+	
 	// Tao nguoi dung moi
 	@Override
 	public User createUser(User userData, Set<UserRole> userRoles) throws Exception {
@@ -70,6 +74,18 @@ public class UserServiceImp implements UserService {
 	public List<User> getAllTeacher() {
 		// TODO Auto-generated method stub
 		return this.userRepo.getAllTeacher();
+	}
+
+	@Override
+	public List<User> getInfoAdmin() {
+		// TODO Auto-generated method stub
+		return this.userRepo.getInfoAdmin();
+	}
+
+	@Override
+	public List<UserDto> getStudentExport() {
+		// TODO Auto-generated method stub
+		return this.userDtoRepo.getStudentExport();
 	}
 
 }

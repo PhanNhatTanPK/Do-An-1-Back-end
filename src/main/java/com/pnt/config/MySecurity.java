@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.pnt.service.imp.UserDetailServiceImp;
+import com.pnt.service.implement.UserDetailServiceImp;
 
 @EnableWebSecurity
 @Configuration
@@ -54,7 +54,7 @@ public class MySecurity extends WebSecurityConfigurerAdapter {
 		http.csrf().disable()
 			.cors().disable()
 			.authorizeRequests()
-			.antMatchers("/generate-token", "/user/register").permitAll()
+			.antMatchers("/generate-token", "/user/student").permitAll()
 			.antMatchers(HttpMethod.OPTIONS).permitAll()
 			.anyRequest().authenticated().and()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

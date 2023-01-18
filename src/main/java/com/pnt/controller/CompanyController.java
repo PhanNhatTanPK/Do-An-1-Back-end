@@ -1,7 +1,5 @@
 package com.pnt.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +20,18 @@ import com.pnt.service.CompanyService;
 @RequestMapping("/company")
 @CrossOrigin("*")
 public class CompanyController {
-	
-	private final CompanyService companyService;
-	
 	@Autowired
-	public CompanyController(CompanyService companyService) {
-		// TODO Auto-generated constructor stub
-		this.companyService = companyService;
-	}
+	private  CompanyService companyService;
+	
 	//Thêm công ty
-	@PostMapping("/create")
+	@PostMapping("/")
 	public ResponseEntity<?> addCompany(@RequestBody Company company) {
 		Company companyData = this.companyService.addCompany(company);
 		return new ResponseEntity<>(companyData, HttpStatus.CREATED);	
 	}
 	
 	// Lấy thông tin công ty từ id
-	@GetMapping("/find/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Company> getCompany(@PathVariable("id") Long id) {
 		Company company = companyService.findCompanyById(id);
 		return new ResponseEntity<>(company, HttpStatus.OK);
@@ -46,20 +39,19 @@ public class CompanyController {
 	
 	//Lấy thông tin tất cả công ty
 	@GetMapping("/all") 
-	public ResponseEntity<List<Company>> getAllCompany(){
-		List<Company> companies = companyService.getAllCompany();
-		return new ResponseEntity<>(companies, HttpStatus.OK);
+	public ResponseEntity<?> getAllCompany(){
+		return ResponseEntity.ok(this.companyService.getAllCompany());
 	}
 	
 	// Cập nhật thông tin công ty
-	@PutMapping("/update")
+	@PutMapping("/")
 	public ResponseEntity<Company> updateCompany(@RequestBody Company company) {
 		Company companyData = companyService.updateCompany(company);
 		return new ResponseEntity<>(companyData, HttpStatus.OK);
 	}
 	
 	// Xóa thông tin công ty
-	@DeleteMapping("/delete/{id}") 
+	@DeleteMapping("/{id}") 
 	public ResponseEntity<?> deleteCompany(@PathVariable("id") Long id){
 		companyService.deleteCompany(id);
 		return new ResponseEntity<>(HttpStatus.OK);

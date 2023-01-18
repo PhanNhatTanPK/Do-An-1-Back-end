@@ -5,21 +5,24 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name = "jobs")
+@Table(name = "job")
 public class Job {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private int quantity;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long jid;
 	private String language;
-	private String time;
+	private int quantity;
 	private String request;
-	private String note;
+	private String time;
 	private String description;
+	private String note;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Company company;
@@ -28,22 +31,16 @@ public class Job {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Job(int quantity, String language, String time, String request, String note, String description) {
+	public Job(String language, int quantity, String request, String time, String description, String note,
+			Company company) {
 		super();
-		this.quantity = quantity;
 		this.language = language;
-		this.time = time;
+		this.quantity = quantity;
 		this.request = request;
-		this.note = note;
+		this.time = time;
 		this.description = description;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+		this.note = note;
+		this.company = company;
 	}
 
 	public int getQuantity() {
@@ -102,4 +99,11 @@ public class Job {
 		this.company = company;
 	}
 
+	public Long getJid() {
+		return jid;
+	}
+
+	public void setJid(Long jid) {
+		this.jid = jid;
+	}
 }

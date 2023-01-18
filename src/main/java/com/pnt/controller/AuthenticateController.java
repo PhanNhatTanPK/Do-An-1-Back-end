@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +22,7 @@ import com.pnt.exception.UserNotFoundException;
 import com.pnt.model.user.JwtRequest;
 import com.pnt.model.user.JwtResponse;
 import com.pnt.model.user.User;
-import com.pnt.service.imp.UserDetailServiceImp;
+import com.pnt.service.implement.UserDetailServiceImp;
 
 @RestController
 @CrossOrigin("*")
@@ -44,7 +45,6 @@ public class AuthenticateController {
 			throw new UserNotFoundException();
 		}
 		
-		//Xác nhận danh tính
 		UserDetails userDetails = this.userDetailServiceImp.loadUserByUsername(jwtRequest.getUserCode());
 		String token = this.jwtUtils.generateToken(userDetails);
 		return ResponseEntity.ok(new JwtResponse(token));
@@ -52,7 +52,7 @@ public class AuthenticateController {
 
 	private void authenticate(String userCode, String password) throws Exception {
 		try {
-			
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userCode, password));
 		} catch (DisabledException e) {
 			// TODO: handle exception
 			throw new Exception("USER DISABLED: " +e.getMessage());			

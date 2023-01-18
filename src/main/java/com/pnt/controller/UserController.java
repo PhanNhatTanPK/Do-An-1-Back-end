@@ -35,15 +35,15 @@ public class UserController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	//Tạo người dùng
-	@PostMapping("/register")
+	@PostMapping("/student")
 	public User createUser(@RequestBody User user) throws Exception {
-		user.setProfile("https://th.bing.com/th/id/R.945f33b643f2ceffcdae90fb57c61854?rik=XcI0SYBgSefoCA&riu=http%3a%2f%2fgetdrawings.com%2ffree-icon-bw%2fanonymous-avatar-icon-19.png&ehk=5n%2buJG66CeLQZsmhaMt8gag5rXuM3TdebAL6W35K1E4%3d&risl=&pid=ImgRaw&r=0");
+		user.setProfile("https://cdn-icons-png.flaticon.com/128/3177/3177440.png");
 		// Mã hóa mật khẩu
 		user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
 		Set<UserRole> roles = new HashSet<>();
 		Role role = new Role();
-		role.setId(2L);
-		role.setRoleName("USER");
+		role.setId(3L);
+		role.setRoleName("STUDENT");
 		
 		UserRole userRole = new UserRole();
 		userRole.setUser(user);
@@ -53,14 +53,14 @@ public class UserController {
 		return this.userService.createUser(user, roles);
 	}
 	
-	@PostMapping("/addTeacher")
+	@PostMapping("/teacher")
 	public User AddTeacher(@RequestBody User user) throws Exception {
-		user.setProfile("https://th.bing.com/th/id/R.945f33b643f2ceffcdae90fb57c61854?rik=XcI0SYBgSefoCA&riu=http%3a%2f%2fgetdrawings.com%2ffree-icon-bw%2fanonymous-avatar-icon-19.png&ehk=5n%2buJG66CeLQZsmhaMt8gag5rXuM3TdebAL6W35K1E4%3d&risl=&pid=ImgRaw&r=0");
+		user.setProfile("https://cdn-icons-png.flaticon.com/128/3177/3177440.png");
 		// Mã hóa mật khẩu
 		user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
 		Set<UserRole> roles = new HashSet<>();
 		Role role = new Role();
-		role.setId(3L);
+		role.setId(2L);
 		role.setRoleName("TEACHER");
 		
 		UserRole userRole = new UserRole();
@@ -71,36 +71,43 @@ public class UserController {
 		return this.userService.createUser(user, roles);
 	}
 	
-	// Lấy thông tin người dùng
+	// Lấy thông tin người dùng bằng userCode
 	@GetMapping("/{userCode}")
 	public User getUser(@PathVariable("userCode") String userCode) {
 		return this.userService.getUser(userCode);
 	}
 	
-	// Lấy thông tin người dùng
-	@GetMapping("/student/all")
+	// Lấy thông tin sinh viên
+	@GetMapping("/student")
 	public List<User> getAllStudent() {
 		return this.userService.getAllStudent();
 	}
 		
-	// Lấy thông tin người dùng
-	@GetMapping("/teacher/all")
+	// Lấy thông tin giảng viên
+	@GetMapping("/teacher")
 	public List<User> getAllTeacher() {
 		return this.userService.getAllTeacher();
 	}
 	
+	// Lấy thông tin quản lý
+	@GetMapping("/infoAdmin")
+	public List<User> getInfoAdmin() {
+		return this.userService.getInfoAdmin();
+	}
+	
 	// Xóa người dùng
-	@DeleteMapping("/delete/{userCode}")
+	@DeleteMapping("/{userCode}")
 	public void deleteUser(@PathVariable("userCode") String userCode) {
 		 this.userService.deleteUserByUserCode(userCode);
 	}
 	
 	// Cập nhật thông tin người dùng
-	@PutMapping("/profile/update")
+	@PutMapping("/profile")
 	public ResponseEntity<User> updateCompany(@RequestBody User user) {
 		User userData = userService.updateUser(user);
 		return new ResponseEntity<>(userData, HttpStatus.OK);
 	}
+	
 	
 	@ExceptionHandler(UserFoundException.class)
 	public ResponseEntity<?> exceptionHandler(UserFoundException ex) {

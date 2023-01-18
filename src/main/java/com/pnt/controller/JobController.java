@@ -23,34 +23,33 @@ public class JobController {
 	private JobService jobService;
 	
 	//Thêm công ty
-		@PostMapping("/create")
-		public ResponseEntity<?> addJob(@RequestBody Job job) {
+		@PostMapping("/")
+		public ResponseEntity<Job> addJob(@RequestBody Job job) {
 			Job jobData = this.jobService.addJob(job);
 			return ResponseEntity.ok(jobData);
 		}
 		
-		// Lấy thông tin công ty từ id
-		@GetMapping("/{jobId}")
-		public Job getJob(@PathVariable("jobId") Long jobId) {
-			return this.jobService.getJob(jobId);
-		}
-		
-		//Lấy thông tin tất cả công ty
+		//Lấy thông tin tất cả thông tin tuyển dụng
 		@GetMapping("/all") 
 		public ResponseEntity<?> getAllJob(){
 			return  ResponseEntity.ok(this.jobService.getAllJob());
 		}
 		
+		//Lấy thông tin tuyển dụng theo id
+		@GetMapping("/{jid}")
+		public ResponseEntity<?> getJobById(@PathVariable("jid") Long jid){
+			return  ResponseEntity.ok(this.jobService.findById(jid));
+		}
 		
-		// Cập nhật thông tin công ty
-		@PutMapping("/update")
+		// Cập nhật thông tin tuyển dụng
+		@PutMapping("/")
 		public  ResponseEntity<?> updateJob(@RequestBody Job job) {
 			return ResponseEntity.ok(this.jobService.updateJob(job)) ;
 		}
 		
-		// Xóa thông tin công ty
-		@DeleteMapping("/{jobId}") 
-		public void deleteCompany(@PathVariable("jobId") Long jobId){
+		// Xóa thông tin tuyển dụng
+		@DeleteMapping("/{jid}") 
+		public void deleteCompany(@PathVariable("jid") Long jobId){
 			this.jobService.deleteJob(jobId);
 		}
 }

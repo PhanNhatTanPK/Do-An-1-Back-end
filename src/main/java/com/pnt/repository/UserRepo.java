@@ -13,11 +13,24 @@ public interface UserRepo extends JpaRepository<User, Long>{
 
 	void deleteByUserCode(String userCode);
 	
-	@Query(value = "SELECT * FROM users INNER JOIN user_role ON users.id = user_role.user_id WHERE user_role.role_id = 3", 
+	@Query(value = "SELECT * FROM users INNER JOIN user_role ON users.id = user_role.user_id WHERE user_role.role_id = 1", 
 			nativeQuery =true)
-	List<User> getAllTeacher();
+	List<User> getInfoAdmin();
 	
 	@Query(value = "SELECT * FROM users INNER JOIN user_role ON users.id = user_role.user_id WHERE user_role.role_id = 2", 
 			nativeQuery =true)
+	List<User> getAllTeacher();
+	
+	@Query(value = "SELECT * FROM users INNER JOIN user_role ON users.id = user_role.user_id WHERE user_role.role_id = 3", 
+			nativeQuery =true)
 	List<User> getAllStudent();
+	
+	@Query(value = "SELECT COUNT(users.user_code) FROM users INNER JOIN user_role ON users.id = user_role.user_id WHERE user_role.role_id = 2", 
+			nativeQuery =true)
+	int getNumberTeacher();
+	
+	@Query(value = "SELECT COUNT(users.user_code) FROM users INNER JOIN user_role ON users.id = user_role.user_id WHERE user_role.role_id = 3", 
+			nativeQuery =true)
+	int getNumberStudent();
+	
 }

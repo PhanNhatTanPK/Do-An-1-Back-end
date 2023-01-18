@@ -1,8 +1,13 @@
 package com.pnt.model.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,16 +16,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.pnt.model.intern.Intern;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails{
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -152,14 +161,15 @@ public class User implements UserDetails{
 		this.enabled = enabled;
 	}
 
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		Set<Authority> set = new HashSet<>();
-		this.userRoles.forEach(userRole ->{
+		this.userRoles.forEach(userRole -> {
 			set.add(new Authority(userRole.getRole().getRoleName()));
 		});
-		return set;
+		return set;		
 	}
 
 	@Override
@@ -192,3 +202,17 @@ public class User implements UserDetails{
 		return true;
 	}
 }
+
+
+//@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//private Set<Intern> interns = new HashSet<>();
+
+//public Set<Intern> getInterns() {
+//return interns;
+//}
+//
+//public void setInterns(Set<Intern> interns) {
+//this.interns = interns;
+//}
+
+//@JsonDeserialize(using = CustomAuthorityDeserializer.class)

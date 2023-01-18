@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.pnt.service.imp.UserDetailServiceImp;
+import com.pnt.service.implement.UserDetailServiceImp;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
